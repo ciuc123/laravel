@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+    app:
+        build: .
+        volumes:
+            - .:/var/www
+        ports:
+            - "8000:9000"
+        depends_on:
+            - db
+        environment:
+            - DB_HOST=db
+            - DB_DATABASE=laravel
+            - DB_USERNAME=laravel
+            - DB_PASSWORD=secret
+
+    db:
+        image: mysql:8
+        restart: always
+        environment:
+            MYSQL_DATABASE: laravel
+            MYSQL_USER: laravel
+            MYSQL_PASSWORD: secret
+            MYSQL_ROOT_PASSWORD: secret
+        ports:
+            - "3306:3306"
