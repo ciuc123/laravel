@@ -4,15 +4,20 @@ services:
         build: .
         volumes:
             - .:/var/www
-        ports:
-            - "8000:9000"
+        expose:
+            - "9000"     # only needs to be accessible to nginx
         depends_on:
             - db
-        environment:
-            - DB_HOST=db
-            - DB_DATABASE=laravel
-            - DB_USERNAME=laravel
-            - DB_PASSWORD=secret
+
+    web:
+        image: nginx:latest
+        ports:
+            - "8000:80"       # Host port 8000 maps to Nginx
+        volumes:
+            - ./nginx.conf:/etc/nginx/conf.d/default.conf
+            - .:/var/www
+        depends_on:
+            - app
 
     db:
         image: mysql:8
