@@ -5,5 +5,8 @@ RUN docker-php-ext-install pdo mbstring pdo_mysql exif pcntl bcmath gd
 COPY . .
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install
+RUN chown -R www-data:www-data storage bootstrap/cache
+RUN chmod -R 775 storage bootstrap/cache
+RUN git config --global --add safe.directory /var/www
 EXPOSE 9000
 CMD ["php-fpm"]
