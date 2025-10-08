@@ -11,5 +11,6 @@ RUN find . -type f -exec chmod 664 {} \;
 RUN find . -type d -exec chmod 775 {} \;
 RUN git config --global --add safe.directory /var/www
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["php-fpm"]
